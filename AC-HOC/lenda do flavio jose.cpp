@@ -2,99 +2,46 @@
 
 using namespace std;
 
-int ultimo(int dist,vector<int>vet){
-    /*for(int n:vet)
-            cout << n << " ";
-           cout << endl;
-            //teste*/
+int posicao = 0;
 
-
-    int ind = -1,ultimo, contador =0, element;
-    vector<int>rem;
+int ans(vector<int>&vet, int jump){
     
-    for(int j=0;j<vet.size()-1;j++){
-            for(int i=0;i<dist;i++){
-                if((ind+dist) > (vet.size()-1)){
-                    element = vet[ind];
-                if (ind == (vet.size()-1)){
-                    ind = 0;
-                    //contador++;
-                    //cout << "Entrou no primeiro if, cont: " << contador << endl;
-                }
-                    else if(find(rem.begin(),rem.end(),element) != rem.end()){
-                        //contador++;
-                        //cout << "Entrou no if, cont: " << element << endl;
-                        ind++;
-                        element = vet[ind];
-                        while(find(rem.begin(),rem.end(),element) != rem.end()){
-                            ind++;
-                            element = vet[ind];
-                        }
-                    }
-                }
-                else{
-                        ind++;
-                        element = vet[ind];
-                        //cout << "Entrou no else, cont: " << element << endl;
-                        while(find(rem.begin(),rem.end(),element) != rem.end()){
-                            ind++;
-                            element = vet[ind];
-                            //cout << "Entrou no while, cont: " << element << endl;
-                        }
-                    //}
-                }
-            }
-        //}else{
-          //  for(int i=1;i<=dist;i++){
-            //    do{
-            //        ind++;
-            //    }
-            //    while(find(rem.begin(),rem.end(),ind) != rem.end());
-                
-        //    }
-        //}
-         
-        //cout << "colocou : " << ind << endl;
-        rem.push_back(vet[ind]);
-
-        /*for(int n:rem)
-            cout << n << " ";
-        cout << endl;
-            //teste*/
-    }
-    
-    for(auto it= vet.begin();it!=vet.end();++it){
-        if(find(rem.begin(),rem.end(),*it) == rem.end()){
-            ultimo = *it;
-            break;
+    for(size_t i=0;i<vet.size();i++){
+        posicao += jump;
+        //cout << "aumentou a posicao " << posicao << endl;
+        while(posicao > vet.size()){
+            //cout << "Entrou if com posicao = " << posicao << endl;
+            posicao -= vet.size();
+            //cout << vet.size() << " = " << posicao << endl;
         }
+
+        posicao--;
+        //cout << "retirou posicao " << posicao << endl;
+        vet.erase(vet.begin() + posicao);
     }
-    return ultimo;
+    //for(int n:vet)
+    //    cout << n << " ";
+    //cout << endl;
+    return vet[0];
 }
 
+
 int main(){
-    int t, cont; cin >> t;
-    while(t--){
-        int tam,dist, last;
-        cont++;
-
-        cin >> tam >> dist;
-
-        vector<int> vet;
-        for (int i=1; i<=tam;i++)
+    int contador=0,rep; cin >> rep;
+    while(rep--){
+        contador++;
+        posicao = 0;
+        int total, salto; cin >> total >> salto;
+        vector<int>vet;
+        for(int i=1;i<=total;i++)
             vet.push_back(i);
-
-        last = ultimo(dist,vet);
-
-        cout << "Case " << cont << ": " << last << endl;
-
+        int last;
+        while(vet.size()>1)
+            last = ans(vet,salto);
+        cout << "Case " << contador << ": " << last << endl;
     }
+
 
 
     return 0;
 }
-
-
-
-
-//[1] [2] [3] [4] [5] 
